@@ -1,5 +1,5 @@
 .vscode/
 venv/
-readme.md
 .idea
 __pycache__
+readme

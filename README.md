@@ -1,4 +1,4 @@
-<!-- ### Создать файл в MFT
+### Создать файл в MFT
 private_settings.py
 
 ### Сборка проекта
@@ -18,4 +18,4 @@ pytest credit_app/tests.py
 ### Запуск линтеров внутри контейнера
 black .<br/>
 isort .<br/>
-flake8<br/> -->
+flake8<br/>

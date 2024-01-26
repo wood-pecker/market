@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 class Base(models.Model):
     class Meta:
         abstract = True
+        ordering = ['-id']
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -15,6 +16,7 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+        ordering = ['-id']
     
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -28,7 +30,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
-        ordering = ['id']
+        ordering = ['-id']
         
     def __str__(self):
         return self.name
@@ -55,20 +57,19 @@ class ProductPhoto(Base):
         verbose_name_plural = 'Фото товара'
         
     def __str__(self):
-        return f'{self.product} ||| {self.photo}'
+        return self.photo.name
     
         
     photo = models.ImageField(upload_to='product_photos/') 
-    product = models.ForeignKey(
-        'Product', on_delete=models.CASCADE, related_name='product_photos'
-    ) 
+    # product = models.ForeignKey(
+    #     'Product', on_delete=models.CASCADE, related_name='product_photos'
+    # ) 
           
     
 class Product(Base):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
-        ordering = ['-id']
         
     def __str__(self):
         return self.name
@@ -81,6 +82,7 @@ class Product(Base):
     category = models.ForeignKey(
         Category, on_delete=models.PROTECT, related_name='product'
     )
+    photos = models.ManyToManyField(ProductPhoto, related_name='products')
     
     
 class Order(Base):
@@ -88,9 +90,7 @@ class Order(Base):
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
         
-    # def __str__(self):
-    #     pass
-        
+    
     products = models.ManyToManyField(Product, related_name='products')
     user = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name='order'

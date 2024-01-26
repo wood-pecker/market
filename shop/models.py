@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 class Base(models.Model):
     class Meta:
         abstract = True
-        ordering = ['-id']
+        ordering = ['-created_at']
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -16,7 +16,7 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-        ordering = ['-id']
+        ordering = ['-date_joined']
     
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -61,9 +61,9 @@ class ProductPhoto(Base):
     
         
     photo = models.ImageField(upload_to='product_photos/') 
-    # product = models.ForeignKey(
-    #     'Product', on_delete=models.CASCADE, related_name='product_photos'
-    # ) 
+    product = models.ForeignKey(
+        'Product', on_delete=models.CASCADE, related_name='product_photos'
+    ) 
           
     
 class Product(Base):
@@ -82,7 +82,7 @@ class Product(Base):
     category = models.ForeignKey(
         Category, on_delete=models.PROTECT, related_name='product'
     )
-    photos = models.ManyToManyField(ProductPhoto, related_name='products')
+    # photos = models.ManyToManyField(ProductPhoto, related_name='products')
     
     
 class Order(Base):
@@ -97,10 +97,10 @@ class Order(Base):
     )
     address = models.CharField(verbose_name = 'Адрес доставки')
     desired_delivery_date = models.DateTimeField(
-        blank=True, verbose_name = 'Желаемое время доставки'
+        blank=True, null=True, verbose_name = 'Желаемое время доставки'
     )
     actual_delivery_date = models.DateTimeField(
-        blank=True, verbose_name = 'Фактическое время доставки'
+        blank=True, null=True, verbose_name = 'Фактическое время доставки'
     )
     status = models.ForeignKey(
         Status, on_delete=models.PROTECT, related_name='order'

@@ -33,29 +33,30 @@
 		</div>
 	</header>
 	<main>
-		<div class="container mt-3">
+		<div class="container">
 			<div class="row">
 				{% for item in object_list %}
-				
-					<div class="col s4 m4">
-					<div class="card blue-grey darken-1">
-						<div class="card-content white-text">
-							<span class="card-title">{{item.name}}</span>
-							<p>Что-то ещё</p>
-							<p>{{item.price}} BYN</p>
-						</div>
-						<div class="card-action">
-							<a href="#">This is a link</a>
-						</div>
-
-						{% with item.photos.first as photo %}
-							{% if photo %}
-								<img src="{{ photo.photo.url }}" alt="" width="50" class="mr-3" />
-							{% else %}
-								{% comment %} <img src="{{ photo.photo.url }}" alt="" width="350" class="mr-3" /> {% endcomment %}
-								No photo
-							{% endif %}
-						{% endwith %}
+					<div class="col s12 m12 l4">
+					<div class="section">
+						<div class="card small">
+							<div class="card-image waves-effect waves-block waves-light">
+								{% with item.photos.first as photo %}
+									{% if photo %}
+                                		<img class="activator" src="{{ photo.photo.url }}" alt="" height="190">
+                            		{% else %}
+										No photo
+                            		{% endif %}
+								{% endwith %}
+							</div>
+							<div class="card-content">
+							  <span class="card-title activator grey-text text-darken-4">{{ item.name }}<i class="material-icons right">more_vert</i></span>
+							  <p><a href="#">{{ item.price }} BYN</a></p>
+							</div>
+							<div class="card-reveal">
+							  <span class="card-title grey-text text-darken-4">{{ item.name }}<i class="material-icons right">close</i></span>
+							  <p>{{ item.description }}</p>
+							</div>
+						  </div>
 					</div>
 					</div>
 				{% endfor %}

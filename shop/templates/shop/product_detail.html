@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
 	<meta charset="utf-8">
-    <title>Home | Shop</title>
+    <title>{{ object.name }}</title>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
@@ -12,11 +13,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	{% comment %} <meta name="keywords" content="важные, ключевые, слова">
-	<meta name="description" content="краткое описание">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
-	<link rel="shortcut icon" type="image/x-icon" href="static/images/favicon.ico">
-	<link rel="stylesheet" type="text/css" href="static/styles/style.css">{% endcomment %}
 	<style>
 		{% comment %} .card .card-image-my img {
 		.card .card-image-my {
@@ -32,21 +28,15 @@
 			height: 123px;
 		} {% endcomment %}
 
-		.card .card-image-my {
+		.card.small .card-image-my {
 			{% comment %} max-height: 60%; {% endcomment %}
 			overflow: hidden;
-			{% comment %} min-height: 158px; {% endcomment %}
+			min-height: 158px;
 			text-align: center; 
-			padding-top: 10px;
 		}
-
-		.center {
-			display: block;
-			margin-left: auto;
-			margin-right: auto;
-		  }
 	</style>
 </head>
+
 <body>
 	<header>
 		<div class="top-header">
@@ -63,39 +53,32 @@
 			</nav>
 		</div>
 	</header>
+
 	<main>
 		<div class="container">
+			<p><span style="color:grey">{{ object.category }}</span></p>
+			<h3>{{ object.name }}</h3>
+			<div class="section">
 			<div class="row">
-				{% for item in object_list %}
-					<div class="col s12 m4 l4">
-					<div class="section">
-						<div class="card medium">
-							<div class="card-image-my">
-								{% with item.product_photos.first as photo %}
+				<div class="col s6 m6 l6">
+					{% with object.product_photos.first as photo %}
 									{% if photo %}
-										{% with photo.photo.height|resize_img:photo.photo.width as sizes %}
-											<img class="center" src="{{ photo.photo.url }}" height="{{ sizes.0 }}" width="{{ sizes.1 }}">
-											{% comment %} <img class="center" src="{{ photo.photo.url }}"> {% endcomment %}
-										{% endwith %}
+										<img class="materialboxed" src="{{ photo.photo.url }}" width="250">
                             		{% else %}
 										No photo
                             		{% endif %}
-								{% endwith %}
-							</div>
-							<div class="card-content">
-								<a href="product/{{item.pk}}">
-									<span class="card-title grey-text text-darken-4">{{ item.name }}</span>
-								</a>
-								<p>{{ item.price }} BYN</p>
-							</div>
-						  </div>
-					</div>
-					</div>
-				{% endfor %}
+					{% endwith %}
+				</div>
+				<div class="col s6 m6 l6">
+					<h5>{{ object.price }} BYN</h5>
+					<p>{{ object.description }}</p>
+				</div>
+			</div>
 			</div>
 		</div>
+
 	</main>
-	
+
 	<footer class="page-footer">
         <div class="container">
             <div class="row">

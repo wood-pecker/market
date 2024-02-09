@@ -1,5 +1,7 @@
 from django import template
 
+from shop.models import Category
+
 register = template.Library()
 
 
@@ -10,3 +12,8 @@ def resize_img(width, height):
     ratio = min(max_width / width, max_height / height)
 
     return int(ratio * width), int(ratio * height)
+
+
+@register.simple_tag
+def get_category():
+    return Category.objects.all()

@@ -1,4 +1,4 @@
-{% load get_category_list %}
+{% load tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,9 +31,12 @@
                       Категории
                     </a>
                     <ul class="dropdown-menu">
-                      {% for item in category_list %}
-                      <li><a class="dropdown-item" href="#">{{ item }}</a></li>
+                      {% get_category as categories%}
+                      {% for item in categories %}
+                        <li><a class="dropdown-item" href="#">{{ item }}</a></li>
                       {% endfor %}
+                      
+                      
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>

@@ -1,0 +1,109 @@
+{% load shop_tags %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+    <title>{{ object.name }}</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<style>
+		{% comment %} .card .card-image-my img {
+		.card .card-image-my {
+			display: block;
+			border-radius: 2px 2px 0 0;
+			position: relative;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin-left: auto;
+			margin-right: auto;
+			height: 123px;
+		} {% endcomment %}
+
+		.card.small .card-image-my {
+			{% comment %} max-height: 60%; {% endcomment %}
+			overflow: hidden;
+			min-height: 158px;
+			text-align: center; 
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<div class="top-header">
+		phone
+		</div>
+		<div class="header-content">
+			<nav class="main-navigation">
+				<ul>
+					<li><a href="#">Главная</a></li>
+					<li><a href="#">О нас</a></li>
+					<li><a href="#">Галерея</a></li>
+					<li><a href="#">Контакты</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<main>
+		<div class="container">
+			<p><span style="color:grey">{{ object.category }}</span></p>
+			<h3>{{ object.name }}</h3>
+			<div class="section">
+			<div class="row">
+				<div class="col s6 m6 l6">
+					{% with object.product_photos.first as photo %}
+									{% if photo %}
+										<img class="materialboxed" src="{{ photo.photo.url }}" width="250">
+                            		{% else %}
+										No photo
+                            		{% endif %}
+					{% endwith %}
+				</div>
+				<div class="col s6 m6 l6">
+					<h5>{{ object.price }} BYN</h5>
+					<p>{{ object.description }}</p>
+				</div>
+			</div>
+			</div>
+		</div>
+
+	</main>
+
+	<footer class="page-footer">
+		
+		<div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+          </div>
+    </footer>
+</body>
+</html>

@@ -21,7 +21,11 @@
             <ul class="dropdown-menu">
               {% get_category as categories%}
               {% for item in categories %}
-                <li><a class="dropdown-item" href="#">{{ item }}</a></li>
+                {% if item.pk == current_category %}
+                <li><a class="dropdown-item active" href="#">{{ item }}</a></li>
+                {% else %}
+                <li><a class="dropdown-item" href="/category/{{ item.pk }}/">{{ item }}</a></li>
+                {% endif %}
               {% endfor %}
             </ul>
           </li>

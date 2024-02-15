@@ -1,68 +1,30 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-	<meta charset="utf-8">
-    <title>Home | Shop</title>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+{% extends "base.html" %}
 
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	{% comment %} <meta name="keywords" content="важные, ключевые, слова">
-	<meta name="description" content="краткое описание">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
-	<link rel="shortcut icon" type="image/x-icon" href="static/images/favicon.ico">
-	<link rel="stylesheet" type="text/css" href="static/styles/style.css">{% endcomment %}
-</head>
-<body>
-	<header>
-		<div class="top-header">
-		phone
-		</div>
-		<div class="header-content">
-			<nav class="main-navigation">
-				<ul>
-					<li><a href="#">Главная</a></li>
-					<li><a href="#">О нас</a></li>
-					<li><a href="#">Галерея</a></li>
-					<li><a href="#">Контакты</a></li>
-				</ul>
-			</nav>
-		</div>
-	</header>
-	<main>
-		<div class="container">
-			<div class="row">
-				{% for item in object_list %}
-					<div class="col s12 m12 l4">
-					<div class="section">
-						<div class="card small">
-							<div class="card-image waves-effect waves-block waves-light">
-								{% with item.photos.first as photo %}
-									{% if photo %}
-                                		<img class="activator" src="{{ photo.photo.url }}" alt="" height="190">
-                            		{% else %}
-										No photo
-                            		{% endif %}
-								{% endwith %}
-							</div>
-							<div class="card-content">
-							  <span class="card-title activator grey-text text-darken-4">{{ item.name }}<i class="material-icons right">more_vert</i></span>
-							  <p><a href="#">{{ item.price }} BYN</a></p>
-							</div>
-							<div class="card-reveal">
-							  <span class="card-title grey-text text-darken-4">{{ item.name }}<i class="material-icons right">close</i></span>
-							  <p>{{ item.description }}</p>
-							</div>
-						  </div>
-					</div>
-					</div>
-				{% endfor %}
-			</div>
-		</div>
-	</main>
-	<footer></footer>
-</body>
-</html>
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        {% for item in object_list %}
+        <div class="col-md-3 d-flex align-items-stretch">
+            <div class="card mb-3" >
+            {% comment %} <div class="card mb-3" style="width: 18rem;"> {% endcomment %}
+                {% with item.product_photos.first as photo %}
+                {% if photo %}
+                    <a href="product/{{ item.pk }}">
+                        <img src="{{photo.photo.url}}" class="card-img-top">
+                    </a>
+                {% else %}
+                    <p>No photo</p>
+                {% endif %}
+                {% endwith %}
+                <div class="card-body">
+                    <a href="/product/{{ item.pk }}"><h5 class="card-title">{{ item.name }}</h5></a>
+                    <p class="card-text">{{ item.price }} p.</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

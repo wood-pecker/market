@@ -1,0 +1,45 @@
+{% load tags %}
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Главная</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Категории
+            </a>
+            <ul class="dropdown-menu">
+              {% get_category as categories%}
+              {% for item in categories %}
+                {% if item.pk == current_category %}
+                <li><a class="dropdown-item active" href="#">{{ item }}</a></li>
+                {% else %}
+                <li><a class="dropdown-item" href="/category/{{ item.pk }}/">{{ item }}</a></li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </li>
+          {% comment %} <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li> {% endcomment %}
+        </ul>
+        {% comment %} <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form> {% endcomment %}
+      </div>
+      <span class="navbar-text ml-3">
+        <a href="/login/">Войти</a> | <a href="/register/">Зарегистрироваться</a>
+      </span>
+    </div>
+</nav>

@@ -31,12 +31,12 @@ class Category(models.Model):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
         ordering = ['-id']
-        
-    def __str__(self):
-        return self.name
     
         
     name = models.CharField(db_index=True, verbose_name = 'Категория')
+    
+    def __str__(self):
+        return self.name
     
 
 class Status(models.Model):

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+	<div class="container mt-5">
+		<h3>{{ object.name }}</h3>
+		<div class="row mt-3">
+			<div class="col-5">
+				<div id="carouselExampleIndicators" class="carousel slide">
+					{% comment %} <div class="carousel-indicators">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+					</div> {% endcomment %}
+					<div class="carousel-inner">
+						{% with photos=object.product_photos.all %}	
+						{% if photos %}
+							{% with main_photo=photos.first %}
+							<div class="carousel-item active">
+								<img src="{{ main_photo.photo.url }}" class="d-block w-100" width="250">
+							</div>
+							{% endwith %}
+
+							{% for photo in photos|slice:"1:" %}
+								<div class="carousel-item">
+									<img src="{{ photo.photo.url }}" class="d-block w-100" width="250">
+								</div>
+							{% endfor %}	
+						{% else %}
+							<p>No photo</p>
+						{% endif %}
+						
+						{% if photos.count > 1 %}
+							<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Previous</span>
+							</button>
+							<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Next</span>
+							</button> 
+						{% endif %}
+						{% endwith %}
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<h5>{{ object.price }} BYN</h5>
+				<p>{{ object.description }}</p>
+			</div>
+		</div>
+	</div>
+{% endblock content %}

@@ -27,6 +27,18 @@ class BaseAdmin(admin.ModelAdmin):
     list_display_links = ("id", "name")
     search_fields = ("id", "name")
     list_filter = ("id", "name")
+    
+    
+class ProductPhotoAdmin(admin.ModelAdmin):
+    fields = ("photo", "get_photo", "product")
+    readonly_fields = ("get_photo",)
+    
+    
+    def get_photo(self, obj):
+        if obj.photo:
+            return mark_safe(f'<img src="{obj.photo.url}" width="120">')
+        
+    get_photo.short_description = "Фото пользователя"
 
 
 admin.site.register(User, UserAdmin)
@@ -34,6 +46,4 @@ admin.site.register(Order)
 admin.site.register(Product, BaseAdmin)
 admin.site.register(Category, BaseAdmin)
 admin.site.register(Status, BaseAdmin)
-admin.site.register(ProductPhoto)
-
-
+admin.site.register(ProductPhoto, ProductPhotoAdmin)
